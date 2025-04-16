@@ -67,6 +67,37 @@ Estrada *getEstrada(const char *nomeArquivo){
 }
 
 double calcularMenorVizinhanca(const char *nomeArquivo){
+
+    Estrada *T = getEstrada(nomeArquivo);
+
+    double vizinhanca[T->N];
+
+    vizinhanca[0] = ((double)T->C[1].Posicao - T->C[0].Posicao) / 2;
+    vizinhanca[0] += T->C[0].Posicao;
+
+    int i;
+    for(i = 1; i < T->N; i++){
+        if(i != T->N - 1){
+            vizinhanca[i] = ((double)T->C[i + 1].Posicao - T->C[i].Posicao) / 2;
+            vizinhanca[i] += ((double)T->C[i].Posicao - T->C[i - 1].Posicao) / 2;
+        }
+        else{
+            vizinhanca[i] = ((double)T->C[i].Posicao - T->C [i - 1].Posicao) / 2;
+            vizinhanca[i] += ((double)T->T - T->C[i].Posicao);
+        }
+    }
+
+    int j;
+    double menor;
+    for(i = 0; i < T->N; i++){
+        for(j = 0; j < i; j++){
+            if(vizinhanca[i] < vizinhanca[j]){
+                menor = vizinhanca[i];
+            }
+        }
+    }
+
+    return menor;
 }
 
 
